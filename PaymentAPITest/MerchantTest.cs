@@ -12,14 +12,14 @@ namespace PaymentAPITest
     {
 
         [Test]
-        public void returns_not_found_response_when_id_does_not_exist()
+        public void returns_not_found_response_when_id_returns_null()
         {
             var mockRepo = new Mock<IMerchantRepository>();
-            mockRepo.Setup(x => x.GetAllMerchants()).Returns(GetMerchants());
+            mockRepo.Setup(x => x.GetMerchant(1)).Returns((Merchant)null);
 
             var merchantController = new MerchantController(mockRepo.Object);
 
-            var result = merchantController.GetMerchant(4) as ObjectResult;
+            var result = merchantController.GetMerchant(1) as ObjectResult;
 
             Assert.AreEqual(404, result.StatusCode);
         }

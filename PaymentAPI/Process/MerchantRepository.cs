@@ -25,14 +25,10 @@ namespace PaymentAPI.Process
             return merchant;
         }
 
-        // return id? for validation
         public string CreateMerchant(Merchant merchant)
         {
             _cPGContext.Add(merchant);
             _cPGContext.SaveChanges();
-           // _cPGContext.MarkAsModified(merchant);
-
-
             var newMerchantId = _cPGContext.Merchants.Find(merchant);
 
             return $"Successfully created new Merchant. Id : {newMerchantId}";
@@ -42,10 +38,8 @@ namespace PaymentAPI.Process
         {
             var unEditedMerchant = GetMerchant(id);
 
-            if(unEditedMerchant == null)
-            {
+            if (unEditedMerchant == null)
                 return null;
-            }
 
             unEditedMerchant.Name = merchant.Name;
             unEditedMerchant.UpperBound = merchant.UpperBound;
