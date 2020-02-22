@@ -15,7 +15,7 @@ namespace PaymentAPI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.1")
+                .HasAnnotation("ProductVersion", "3.1.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -25,6 +25,12 @@ namespace PaymentAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PaymentRequestId")
+                        .HasColumnType("int");
 
                     b.Property<string>("card_number")
                         .HasColumnType("nvarchar(16)")
@@ -49,6 +55,11 @@ namespace PaymentAPI.Migrations
 
                     b.HasKey("CardId");
 
+                    b.HasIndex("CustomerId")
+                        .IsUnique();
+
+                    b.HasIndex("PaymentRequestId");
+
                     b.ToTable("Cards");
                 });
 
@@ -59,15 +70,40 @@ namespace PaymentAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CardId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MerchantId")
+                        .HasColumnType("int");
+
                     b.Property<string>("email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CustomerId");
 
+                    b.HasIndex("MerchantId");
+
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("PaymentAPI.Models.Merchant", b =>
+                {
+                    b.Property<int>("MerchantId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MerchantId");
+
+                    b.ToTable("Merchants");
                 });
 
             modelBuilder.Entity("PaymentAPI.Models.PaymentRequest", b =>
@@ -77,10 +113,10 @@ namespace PaymentAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CardId")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int?>("MerchantId")
                         .HasColumnType("int");
 
                     b.Property<int>("amount")
@@ -101,26 +137,48 @@ namespace PaymentAPI.Migrations
 
                     b.HasKey("PaymentRequestId");
 
-                    b.HasIndex("CardId");
-
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("MerchantId");
 
                     b.ToTable("PaymentRequests");
                 });
 
-            modelBuilder.Entity("PaymentAPI.Models.PaymentRequest", b =>
+            modelBuilder.Entity("PaymentAPI.Models.Card", b =>
                 {
-                    b.HasOne("PaymentAPI.Models.Card", "Card")
-                        .WithMany()
-                        .HasForeignKey("CardId")
+                    b.HasOne("PaymentAPI.Models.Customer", "Customer")
+                        .WithOne("Card")
+                        .HasForeignKey("PaymentAPI.Models.Card", "CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PaymentAPI.Models.Customer", "Customer")
+                    b.HasOne("PaymentAPI.Models.PaymentRequest", "PaymentRequest")
                         .WithMany()
+                        .HasForeignKey("PaymentRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PaymentAPI.Models.Customer", b =>
+                {
+                    b.HasOne("PaymentAPI.Models.Merchant", "Merchant")
+                        .WithMany("Customers")
+                        .HasForeignKey("MerchantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PaymentAPI.Models.PaymentRequest", b =>
+                {
+                    b.HasOne("PaymentAPI.Models.Customer", "Customer")
+                        .WithMany("PaymentRequest")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("PaymentAPI.Models.Merchant", null)
+                        .WithMany("PaymentRequests")
+                        .HasForeignKey("MerchantId");
                 });
 #pragma warning restore 612, 618
         }

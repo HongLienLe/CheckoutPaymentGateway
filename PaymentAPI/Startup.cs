@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PaymentAPI.Data;
+using PaymentAPI.Process;
 
 namespace PaymentAPI
 {
@@ -29,6 +30,8 @@ namespace PaymentAPI
         {
             services.AddDbContext<CPGContext>(o => o
             .UseSqlServer(Configuration.GetConnectionString("CheckOutPGDB")));
+
+            services.AddScoped<IMerchantRepository, MerchantRepository>();
 
             services.AddControllers();
         }

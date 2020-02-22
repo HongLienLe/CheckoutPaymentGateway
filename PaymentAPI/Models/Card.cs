@@ -32,5 +32,11 @@ namespace PaymentAPI.Models
         [NotMapped]
         public Phone phone { get; set; }
 
+        public int CustomerId { get; set; }
+        public Customer Customer { get; set; }
+
+        public int PaymentRequestId { get; set; }
+        public PaymentRequest PaymentRequest { get; set; }
+
     }
 }

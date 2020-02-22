@@ -14,5 +14,16 @@ namespace PaymentAPI.Data
         public DbSet<Customer> Customers { get; set; }
         public DbSet<PaymentRequest> PaymentRequests { get; set; }
         public DbSet<Card> Cards { get; set; }
+        public DbSet<Merchant> Merchants { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Customer>(e =>
+            {
+                e.HasOne(x => x.Card)
+                .WithOne(x => x.Customer)
+                .HasForeignKey<Card>(x => x.CustomerId);
+            });
+        }
     }
 }
