@@ -8,18 +8,18 @@ namespace PaymentAPI.Data
     {
         public static void SeedData(this CPGContext context)
         {
-            if (context.Cards.Any())
-                return;
+            //if (context.Cards.Any())
+            //    return;
 
-            Customer customer = new Customer()
-            {
-                name = "customer1",
-                email = "customer1@mail.com"
-            };
+            //Customer customer = new Customer()
+            //{
+            //    name = "customer1",
+            //    email = "customer1@mail.com"
+            //};
 
-            context.Customers.Add(customer);
+            //context.Customers.Add(customer);
 
-            context.SaveChanges();
+            //context.SaveChanges();
         }
     }
 }

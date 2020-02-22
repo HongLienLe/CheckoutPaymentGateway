@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PaymentAPI.Data;
 using PaymentAPI.Process;
+using Microsoft.OpenApi.Models;
 
 namespace PaymentAPI
 {
@@ -33,6 +34,11 @@ namespace PaymentAPI
 
             services.AddScoped<IMerchantRepository, MerchantRepository>();
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My Checkout Payment Gateway API", Version = "v1" });
+            });
+
             services.AddControllers();
         }
 
@@ -45,6 +51,13 @@ namespace PaymentAPI
             }
 
             context.SeedData();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Checkout Payment Gateway API");
+            });
 
             app.UseHttpsRedirection();
 

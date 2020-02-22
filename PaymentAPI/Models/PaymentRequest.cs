@@ -11,7 +11,7 @@ namespace PaymentAPI.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PaymentRequestId { get; set; }
 
-        [Range(0,200000, ErrorMessage = "Amount must be between 0 and 200000")]
+        [Range(0,Double.MaxValue, ErrorMessage = "Amount value must ")]
         public int amount { get; set; }
 
         [StringLength(3, ErrorMessage = "Currency must have 3 Characters",MinimumLength = 3)]
@@ -20,11 +20,14 @@ namespace PaymentAPI.Models
         [Required]
         public DateTime capture_on { get; set; }
 
+        public PaymentType payment_type { get; set; }
+        public string description { get; set; }
+
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
 
-        public PaymentType payment_type { get; set; }
-        public string description { get; set; }
+        public int MerchantId { get; set; }
+        public Merchant Merchant { get; set; }
 
     }
 

@@ -10,8 +10,8 @@ using PaymentAPI.Data;
 namespace PaymentAPI.Migrations
 {
     [DbContext(typeof(CPGContext))]
-    [Migration("20200222173710_firstMigrations")]
-    partial class firstMigrations
+    [Migration("20200222200840_resetFirstMigration")]
+    partial class resetFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -100,8 +100,14 @@ namespace PaymentAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("name")
+                    b.Property<int>("LowerBound")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UpperBound")
+                        .HasColumnType("int");
 
                     b.HasKey("MerchantId");
 
@@ -118,7 +124,7 @@ namespace PaymentAPI.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MerchantId")
+                    b.Property<int>("MerchantId")
                         .HasColumnType("int");
 
                     b.Property<int>("amount")
@@ -151,7 +157,7 @@ namespace PaymentAPI.Migrations
                     b.HasOne("PaymentAPI.Models.Customer", "Customer")
                         .WithOne("Card")
                         .HasForeignKey("PaymentAPI.Models.Card", "CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("PaymentAPI.Models.PaymentRequest", "PaymentRequest")
@@ -166,7 +172,7 @@ namespace PaymentAPI.Migrations
                     b.HasOne("PaymentAPI.Models.Merchant", "Merchant")
                         .WithMany("Customers")
                         .HasForeignKey("MerchantId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -175,12 +181,14 @@ namespace PaymentAPI.Migrations
                     b.HasOne("PaymentAPI.Models.Customer", "Customer")
                         .WithMany("PaymentRequest")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("PaymentAPI.Models.Merchant", null)
+                    b.HasOne("PaymentAPI.Models.Merchant", "Merchant")
                         .WithMany("PaymentRequests")
-                        .HasForeignKey("MerchantId");
+                        .HasForeignKey("MerchantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

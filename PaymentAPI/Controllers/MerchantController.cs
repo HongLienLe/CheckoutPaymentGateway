@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PaymentAPI.Models;
 using PaymentAPI.Process;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -20,12 +21,6 @@ namespace PaymentAPI.Controllers
             _merchantRepository = merchantRepository;
         }
 
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
         // GET api/values/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
@@ -33,13 +28,27 @@ namespace PaymentAPI.Controllers
             var merchant = _merchantRepository.GetMerchant(id);
 
             if(merchant == null)
-            {
                 return NotFound($"Merchant {id} does not exist");
-            }
 
             return Ok(merchant);
         }
 
+        [HttpPost("Update/{id}")]
+        public IActionResult Update(int id, [FromBody] Merchant updatedMerchant)
+        {
+            var returnValue = _merchantRepository.UpdateMerchant(id, updatedMerchant);
+
+            if (returnValue == null)
+                return NotFound($"Merchant {id} does not exist");
+
+            return Ok(returnValue);
+        }
+
+        //[HttpGet("Create")]
+        //public IActionResult Create([FromBody] Merchant merchant)
+        //{
+
+        //}
         
     }
 }

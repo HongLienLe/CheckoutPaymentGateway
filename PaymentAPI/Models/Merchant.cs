@@ -8,7 +8,13 @@ namespace PaymentAPI.Models
     {
         [Key]
         public int MerchantId { get; set; }
-        public string name { get; set; }
+        public string Name { get; set; }
+
+        [Range(0, double.MaxValue, ErrorMessage = "Min value must be equal 0 or more")]
+        public int LowerBound { get; set; }
+
+        [Required]
+        public int UpperBound { get; set; }
 
         public ICollection<PaymentRequest> PaymentRequests { get; set; }
         public ICollection<Customer> Customers { get; set; }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PaymentAPI.Migrations
 {
-    public partial class firstMigrations : Migration
+    public partial class resetFirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,9 @@ namespace PaymentAPI.Migrations
                 {
                     MerchantId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    LowerBound = table.Column<int>(nullable: false),
+                    UpperBound = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -39,7 +41,7 @@ namespace PaymentAPI.Migrations
                         column: x => x.MerchantId,
                         principalTable: "Merchants",
                         principalColumn: "MerchantId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -51,10 +53,10 @@ namespace PaymentAPI.Migrations
                     amount = table.Column<int>(nullable: false),
                     currency = table.Column<string>(maxLength: 3, nullable: true),
                     capture_on = table.Column<DateTime>(nullable: false),
-                    CustomerId = table.Column<int>(nullable: false),
                     payment_type = table.Column<int>(nullable: false),
                     description = table.Column<string>(nullable: true),
-                    MerchantId = table.Column<int>(nullable: true)
+                    CustomerId = table.Column<int>(nullable: false),
+                    MerchantId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,13 +66,13 @@ namespace PaymentAPI.Migrations
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "CustomerId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PaymentRequests_Merchants_MerchantId",
                         column: x => x.MerchantId,
                         principalTable: "Merchants",
                         principalColumn: "MerchantId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -96,7 +98,7 @@ namespace PaymentAPI.Migrations
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "CustomerId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Cards_PaymentRequests_PaymentRequestId",
                         column: x => x.PaymentRequestId,

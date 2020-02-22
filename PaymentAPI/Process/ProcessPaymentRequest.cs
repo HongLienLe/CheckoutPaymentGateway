@@ -10,6 +10,11 @@ namespace PaymentAPI.Process
 
         }
 
+        public bool isAmountWithInRange(PaymentRequest paymentRequest)
+        {
+            var amount = paymentRequest.amount;
 
+            return amount < 0 || amount > 10000 ? true : false;
+        }
     }
 }

@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentAPI", "PaymentAPI\PaymentAPI.csproj", "{05A43F30-E971-4529-965D-E997449A3533}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentAPITest", "PaymentAPITest\PaymentAPITest.csproj", "{0C2E951A-78AC-4CF5-A158-CF009C789FBF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,5 +15,9 @@ Global
 		{05A43F30-E971-4529-965D-E997449A3533}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05A43F30-E971-4529-965D-E997449A3533}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05A43F30-E971-4529-965D-E997449A3533}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C2E951A-78AC-4CF5-A158-CF009C789FBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C2E951A-78AC-4CF5-A158-CF009C789FBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C2E951A-78AC-4CF5-A158-CF009C789FBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C2E951A-78AC-4CF5-A158-CF009C789FBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

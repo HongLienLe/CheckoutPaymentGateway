@@ -7,6 +7,6 @@ namespace PaymentAPI.Process
     {
         public Merchant GetMerchant(int id);
         public string UpdateMerchant(int id, Merchant merchant);
-        public void CreateMerchant(Merchant merchant);
+        public string CreateMerchant(Merchant merchant);
     }
 }

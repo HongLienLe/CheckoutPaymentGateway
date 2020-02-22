@@ -8,7 +8,7 @@ namespace PaymentAPI.Data
     {
         public CPGContext(DbContextOptions<CPGContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            Database.EnsureDeleted();
         }
 
         public DbSet<Customer> Customers { get; set; }
@@ -22,8 +22,20 @@ namespace PaymentAPI.Data
             {
                 e.HasOne(x => x.Card)
                 .WithOne(x => x.Customer)
-                .HasForeignKey<Card>(x => x.CustomerId);
+                .HasForeignKey<Card>(x => x.CustomerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                e.HasMany(x => x.PaymentRequest)
+                .WithOne(x => x.Customer)
+                .HasForeignKey(x => x.CustomerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                e.HasOne(x => x.Merchant)
+                .WithMany(x => x.Customers)
+                .HasForeignKey(x => x.MerchantId)
+                .OnDelete(DeleteBehavior.Restrict);
             });
+
         }
     }
 }
