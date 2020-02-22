@@ -4,17 +4,22 @@ using PaymentAPI.Models;
 
 namespace PaymentAPI.Data
 {
-    public class CPGContext : DbContext
+    public class CPGContext : DbContext, ICPGContext
     {
         public CPGContext(DbContextOptions<CPGContext> options) : base(options)
         {
-            Database.EnsureDeleted();
+            Database.EnsureCreated();
         }
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<PaymentRequest> PaymentRequests { get; set; }
         public DbSet<Card> Cards { get; set; }
         public DbSet<Merchant> Merchants { get; set; }
+
+        public void MarkAsModified(object item)
+        {
+            Entry(item).State = EntityState.Modified;
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

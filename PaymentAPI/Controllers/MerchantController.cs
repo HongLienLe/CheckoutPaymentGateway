@@ -23,7 +23,7 @@ namespace PaymentAPI.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetMerchant(int id)
         {
             var merchant = _merchantRepository.GetMerchant(id);
 
@@ -34,7 +34,7 @@ namespace PaymentAPI.Controllers
         }
 
         [HttpPost("Update/{id}")]
-        public IActionResult Update(int id, [FromBody] Merchant updatedMerchant)
+        public IActionResult UpdateMerchant(int id, [FromBody] Merchant updatedMerchant)
         {
             var returnValue = _merchantRepository.UpdateMerchant(id, updatedMerchant);
 
@@ -44,11 +44,11 @@ namespace PaymentAPI.Controllers
             return Ok(returnValue);
         }
 
-        //[HttpGet("Create")]
-        //public IActionResult Create([FromBody] Merchant merchant)
-        //{
+        [HttpGet("Create")]
+        public IActionResult CreateMerchant([FromBody] Merchant merchant)
+        {
+            return Ok(_merchantRepository.CreateMerchant(merchant));
+        }
 
-        //}
-        
     }
 }

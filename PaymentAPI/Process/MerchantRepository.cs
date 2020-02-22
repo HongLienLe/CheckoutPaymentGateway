@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using PaymentAPI.Data;
 using PaymentAPI.Models;
@@ -29,6 +30,8 @@ namespace PaymentAPI.Process
         {
             _cPGContext.Add(merchant);
             _cPGContext.SaveChanges();
+           // _cPGContext.MarkAsModified(merchant);
+
 
             var newMerchantId = _cPGContext.Merchants.Find(merchant);
 
@@ -50,6 +53,11 @@ namespace PaymentAPI.Process
             _cPGContext.SaveChanges();
 
             return "Updated Merchant Details";
+        }
+
+        public List<Merchant> GetAllMerchants()
+        {
+            return _cPGContext.Merchants.ToList();
         }
     }
 }
