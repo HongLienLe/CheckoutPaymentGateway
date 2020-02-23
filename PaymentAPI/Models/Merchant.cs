@@ -13,12 +13,13 @@ namespace PaymentAPI.Models
 
         public string Name { get; set; }
 
+        [Required]
         [Range(0, double.MaxValue, ErrorMessage = "Min value must be equal 0 or more")]
-        public int LowerBoundAmount { get; set; }
+        public int MinAmount { get; set; }
 
         [Required]
         [Range(0, double.MaxValue, ErrorMessage = "Min value must be equal 0 or more")]
-        public int UpperBoundAmount { get; set; }
+        public int MaxAmount { get; set; }
 
         public ICollection<PaymentRequest> PaymentRequests { get; set; }
         public ICollection<Customer> Customers { get; set; }

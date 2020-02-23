@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using PaymentAPI.Models;
 using PaymentAPI.Process;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace PaymentAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -20,7 +18,6 @@ namespace PaymentAPI.Controllers
             _merchantRepository = merchantRepository;
         }
 
-        // GET api/values/5
         [HttpGet("{id}")]
         public IActionResult GetMerchant(int id)
         {
@@ -35,6 +32,9 @@ namespace PaymentAPI.Controllers
         [HttpPost("Update/{id}")]
         public IActionResult UpdateMerchant(int id, [FromBody] Merchant updatedMerchant)
         {
+            if (updatedMerchant.MinAmount > updatedMerchant.MaxAmount || updatedMerchant.MinAmount == 0 || updatedMerchant.MaxAmount == 0)
+                return BadRequest("Min Value can not be more than Max value or equal to");
+
             var returnValue = _merchantRepository.UpdateMerchant(id, updatedMerchant);
 
             if (returnValue == null)
@@ -47,7 +47,10 @@ namespace PaymentAPI.Controllers
         public IActionResult CreateMerchant([FromBody] Merchant merchant)
         {
             if (!ModelState.IsValid)
-                return BadRequest($"Model state is Invalid {merchant}");
+                return BadRequest("Model state is Invalid");
+
+            if (merchant.MinAmount > merchant.MaxAmount || merchant.MinAmount < 0 || merchant.MaxAmount < 0)
+                return BadRequest("Min Value can not be more than Max value or less than 0");
 
             return Ok(_merchantRepository.CreateMerchant(merchant));
         }

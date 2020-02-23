@@ -33,22 +33,22 @@ namespace PaymentAPITest
                 {
                     MerchantId = 1,
                     Name = "Merchant 1",
-                    LowerBound = 0,
-                    UpperBound = 1000,
+                    LowerBoundAmount = 0,
+                    UpperBoundAmount = 1000,
                 },
                 new Merchant()
                 {
                     MerchantId = 2,
                     Name = "Merchant 2",
-                    LowerBound = 0,
-                    UpperBound = 2000,
+                    LowerBoundAmount = 0,
+                    UpperBoundAmount = 2000,
                 },
                 new Merchant()
                 {
                     MerchantId = 3,
                     Name = "Merchant 3",
-                    LowerBound = 0,
-                    UpperBound = 3000,
+                    LowerBoundAmount = 0,
+                    UpperBoundAmount = 3000,
                 }
             };
 

@@ -27,10 +27,9 @@ namespace PaymentAPI.Process
 
         public string CreateMerchant(Merchant merchant)
         {
+
             _cPGContext.Merchants.Add(merchant);
             _cPGContext.SaveChanges();
-
-
 
             return $"Successfully created new Merchant";
         }
@@ -42,8 +41,9 @@ namespace PaymentAPI.Process
             if (unEditedMerchant == null)
                 return null;
 
-            unEditedMerchant.Name = merchant.Name;
-            unEditedMerchant.UpperBoundAmount = merchant.UpperBoundAmount;
+            unEditedMerchant.Name = merchant.Name == null ? unEditedMerchant.Name : merchant.Name;
+            unEditedMerchant.MinAmount = merchant.MinAmount == unEditedMerchant.MinAmount || merchant.MinAmount == 0  ? unEditedMerchant.MinAmount : merchant.MinAmount;
+            unEditedMerchant.MaxAmount = merchant.MaxAmount == unEditedMerchant.MaxAmount || merchant.MaxAmount == 0 ? unEditedMerchant.MaxAmount : merchant.MaxAmount;
 
             _cPGContext.SaveChanges();
 
@@ -54,5 +54,6 @@ namespace PaymentAPI.Process
         {
             return _cPGContext.Merchants.ToList();
         }
+
     }
 }
