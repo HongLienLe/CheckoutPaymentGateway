@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PaymentAPI.Data;
 using PaymentAPI.Models;
 
 namespace PaymentAPI.Process
 {
-    public class CustomerRepository
+    public class CustomerRepository : ICustomerRepository
     {
         private CPGContext _cPGContext;
 
@@ -24,9 +25,18 @@ namespace PaymentAPI.Process
             return customer != null ? customer : null;
         }
 
-        //public Customer CreateCustomer(Customer customer, Card card)
-        //{
-        //    var customer 
-        //}
+        public Customer CreateCustomer( Customer customer)
+        {
+            if (_cPGContext.Customers.Any(x => x.email == customer.email && x.Merchant == customer.Merchant))
+                return null;
+
+            var newCustomer = new Customer(customer.email, customer.name, customer.MerchantId);
+
+            _cPGContext.Customers.Add(newCustomer);
+
+            _cPGContext.SaveChanges();
+
+            return GetCustomer(customer.MerchantId, customer.email);
+        }
     }
 }

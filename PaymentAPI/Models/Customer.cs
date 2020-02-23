@@ -30,11 +30,11 @@ namespace PaymentAPI.Models
             Cards = new List<Card>();
         }
 
-        public Customer(string email, string name, Merchant merchant)
+        public Customer(string email, string name, int merchantId)
         {
             this.email = email;
             this.name = name;
-            Merchant = merchant;
+            MerchantId = merchantId;
         }
 
     }

@@ -36,47 +36,9 @@ namespace PaymentAPITest
 
             Assert.AreEqual(200, result.StatusCode);
         }
-
-
-
-        private List<Merchant> GetMerchants()
-        {
-            List<Merchant> merchants = new List<Merchant>()
-            {
-                new Merchant()
-                {
-                    MerchantId = 1,
-                    Name = "Merchant 1",
-                    MinAmount = 0,
-                    MaxAmount = 1000,
-                },
-                new Merchant()
-                {
-                    MerchantId = 2,
-                    Name = "Merchant 2",
-                    MinAmount = 0,
-                    MaxAmount = 2000,
-                },
-                new Merchant()
-                {
-                    MerchantId = 3,
-                    Name = "Merchant 3",
-                    MinAmount = 0,
-                    MaxAmount = 3000,
-                }
-            };
-
-            return merchants;
-        }
-
         private Merchant GetMerchant()
         {
-            return new Merchant()
-            {
-                Name = "Merchant Name",
-                MinAmount = 0,
-                MaxAmount = 100
-            };
+            return new Merchant("Merchant Name");
         }
     }
 }
