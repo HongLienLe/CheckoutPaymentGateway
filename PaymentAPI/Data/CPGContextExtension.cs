@@ -11,15 +11,15 @@ namespace PaymentAPI.Data
             if (context.Merchants.Any())
                 return;
 
-            var merchant = new Merchant()
-            {
-                Name = "Merchant0",
-                UpperBound = 1000,
-            };
+            //var merchant = new Merchant()
+            //{
+            //    Name = "Merchant0",
+            //    UpperBound = 1000,
+            //};
 
-            context.Merchants.Add(merchant);
+            //context.Merchants.Add(merchant);
 
-            context.SaveChanges();
+            //context.SaveChanges();
         }
     }
 }

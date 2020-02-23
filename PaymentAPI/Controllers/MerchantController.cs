@@ -46,7 +46,21 @@ namespace PaymentAPI.Controllers
         [HttpPost("Create")]
         public IActionResult CreateMerchant([FromBody] Merchant merchant)
         {
+            if (!ModelState.IsValid)
+                return BadRequest($"Model state is Invalid {merchant}");
+
             return Ok(_merchantRepository.CreateMerchant(merchant));
+        }
+
+        [HttpGet()]
+        public IActionResult GetMerchants()
+        {
+            var merchant = _merchantRepository.GetAllMerchants();
+
+            if(merchant == null)
+                return NotFound("There are no Merchants");
+
+            return Ok(merchant); 
         }
 
     }

@@ -30,6 +30,8 @@ namespace PaymentAPI.Process
             _cPGContext.Merchants.Add(merchant);
             _cPGContext.SaveChanges();
 
+
+
             return $"Successfully created new Merchant";
         }
 
@@ -41,7 +43,7 @@ namespace PaymentAPI.Process
                 return null;
 
             unEditedMerchant.Name = merchant.Name;
-            unEditedMerchant.UpperBound = merchant.UpperBound;
+            unEditedMerchant.UpperBoundAmount = merchant.UpperBoundAmount;
 
             _cPGContext.SaveChanges();
 

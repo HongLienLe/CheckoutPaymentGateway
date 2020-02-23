@@ -24,6 +24,7 @@ namespace PaymentAPITest
             Assert.AreEqual(404, result.StatusCode);
         }
 
+
         private List<Merchant> GetMerchants()
         {
             List<Merchant> merchants = new List<Merchant>()
