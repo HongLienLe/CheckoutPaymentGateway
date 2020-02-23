@@ -14,14 +14,19 @@ namespace PaymentAPI.Process
             _cPGContext = CPGContext;
         }
 
-        public Customer GetCustomer(string cardAccountNo)
+        public Customer GetCustomer(int merchantId, string email)
         {
-            if (!_cPGContext.Cards.Any(x => x.card_number == cardAccountNo))
+            if (!_cPGContext.Customers.Any(x => x.email == email && x.MerchantId == merchantId))
                 return null;
 
-            var customer = _cPGContext.Cards.First(x => x.card_number == cardAccountNo).Customer;
+            var customer = _cPGContext.Customers.SingleOrDefault(x => x.MerchantId == merchantId && x.email == email);
 
-            return customer;
+            return customer != null ? customer : null;
         }
+
+        //public Customer CreateCustomer(Customer customer, Card card)
+        //{
+        //    var customer 
+        //}
     }
 }

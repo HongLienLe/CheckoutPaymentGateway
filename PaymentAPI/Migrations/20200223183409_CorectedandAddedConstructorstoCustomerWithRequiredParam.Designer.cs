@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PaymentAPI.Data;
 
 namespace PaymentAPI.Migrations
 {
     [DbContext(typeof(CPGContext))]
-    partial class CPGContextModelSnapshot : ModelSnapshot
+    [Migration("20200223183409_CorectedandAddedConstructorstoCustomerWithRequiredParam")]
+    partial class CorectedandAddedConstructorstoCustomerWithRequiredParam
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,8 +82,7 @@ namespace PaymentAPI.Migrations
 
                     b.Property<string>("name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CustomerId");
 
@@ -104,7 +105,6 @@ namespace PaymentAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MerchantId");
@@ -135,7 +135,6 @@ namespace PaymentAPI.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("currency")
-                        .IsRequired()
                         .HasColumnType("nvarchar(3)")
                         .HasMaxLength(3);
 

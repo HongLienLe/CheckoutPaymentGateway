@@ -14,6 +14,21 @@ namespace PaymentAPI.Process
             _merchantRepository = merchantRepository;
         }
 
+        //Method ProcessPayment
+
+            //Currency check if not - return null; Currency is not supported
+            //Merchant Check if not - either merchant acc does not exist or amount out of range
+            //Customer Check - check card number 
+
+        public void ProcessingPaymentRequest(PaymentRequestEntryToBank paymentRequestEntry)
+        {
+            var merchant = MerchantValidationCheck(paymentRequestEntry);
+            if (merchant == null)
+                return;
+
+        }
+
+
         public Merchant MerchantValidationCheck(PaymentRequestEntryToBank paymentRequestEntry)
         {
             var merchant = _merchantRepository.GetMerchant(paymentRequestEntry.paymentRequest.MerchantId);
@@ -37,11 +52,6 @@ namespace PaymentAPI.Process
 
             return paymentType == PaymentType.Recurring ? true : false;
         }
-
-        //public Customer GetCustomer(PaymentRequestEntryToBank paymentRequestEntry)
-        //{
-        //    var Customer = paymentRequestEntry.paymentRequest.Customer;
-        //}
 
     }
 }

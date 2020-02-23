@@ -34,6 +34,8 @@ namespace PaymentAPI.Models
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
 
+        public Merchant Merchant { get; set; }
+
         public PaymentRequest PaymentRequest { get; set; }
 
         private Card()
@@ -41,7 +43,7 @@ namespace PaymentAPI.Models
 
         }
 
-        public Card(string card_number, int expiry_month, int expiry_year, string cvv, string name, Customer customer)
+        public Card(string card_number, int expiry_month, int expiry_year, string cvv, string name, Customer customer, Merchant merchant)
         {
             this.card_number = card_number;
             this.expiry_month = expiry_month;
@@ -49,6 +51,7 @@ namespace PaymentAPI.Models
             this.cvv = cvv;
             this.name = name;
             Customer = customer;
+            Merchant = merchant;
         }
 
     }

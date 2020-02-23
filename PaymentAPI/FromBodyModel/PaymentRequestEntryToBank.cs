@@ -7,6 +7,9 @@ namespace PaymentAPI.FromBodyModel
     public class PaymentRequestEntryToBank
     {
         [Required]
+        public bool isNewCustomer { get; set; }
+
+        [Required]
         public PaymentRequest paymentRequest { get; set; }
 
         [Required]

@@ -9,8 +9,9 @@ namespace PaymentAPI.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int MerchantId { get; set; }
+        public int MerchantId { get; protected set; }
 
+        [Required]
         public string Name { get; set; }
 
         [Required]
@@ -25,11 +26,17 @@ namespace PaymentAPI.Models
         public ICollection<Customer> Customers { get; set; }
         public ICollection<Card> Cards { get; set; }
 
-        public Merchant()
+        private Merchant()
         {
-            PaymentRequests = new List<PaymentRequest>();
             Customers = new List<Customer>();
             Cards = new List<Card>();
+            PaymentRequests = new List<PaymentRequest>();
+
+        }
+
+        public Merchant(string name)
+        {
+            Name = name;
         }
 
     }

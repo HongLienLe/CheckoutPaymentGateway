@@ -1,6 +1,7 @@
 ﻿using System;
 using PaymentAPI.Data;
 using PaymentAPI.Models;
+using System.Linq;
 
 namespace PaymentAPI.Process
 {
@@ -18,5 +19,10 @@ namespace PaymentAPI.Process
             _CPGContext.Cards.Add(card);
             _CPGContext.SaveChanges();
         }
+
+        //public Card GetCard(string cardNo)
+        //{
+        //    return _CPGContext.Cards.Where(x => x.card_number == cardNo);
+        //}
     }
 }
