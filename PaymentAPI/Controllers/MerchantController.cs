@@ -13,7 +13,6 @@ namespace PaymentAPI.Controllers
     [Route("api/[controller]")]
     public class MerchantController : Controller
     {
-
         private IMerchantRepository _merchantRepository;
 
         public MerchantController(IMerchantRepository merchantRepository)
@@ -44,7 +43,7 @@ namespace PaymentAPI.Controllers
             return Ok(returnValue);
         }
 
-        [HttpGet("Create")]
+        [HttpPost("Create")]
         public IActionResult CreateMerchant([FromBody] Merchant merchant)
         {
             return Ok(_merchantRepository.CreateMerchant(merchant));

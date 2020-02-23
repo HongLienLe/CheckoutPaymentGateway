@@ -32,7 +32,7 @@ namespace PaymentAPI
             services.AddDbContext<CPGContext>(o => o
             .UseSqlServer(Configuration.GetConnectionString("CheckOutPGDB")));
 
-            services.AddScoped<IMerchantRepository, MerchantRepository>();
+            services.AddTransient<IMerchantRepository, MerchantRepository>();
 
             services.AddSwaggerGen(c =>
             {

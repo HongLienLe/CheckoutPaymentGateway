@@ -7,6 +7,7 @@ namespace PaymentAPI.Models
     public class Card
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CardId { get; set; }
 
         [StringLength(16, ErrorMessage = "Card number contains of 16 digits")]

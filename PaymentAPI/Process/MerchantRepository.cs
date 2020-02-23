@@ -27,11 +27,10 @@ namespace PaymentAPI.Process
 
         public string CreateMerchant(Merchant merchant)
         {
-            _cPGContext.Add(merchant);
+            _cPGContext.Merchants.Add(merchant);
             _cPGContext.SaveChanges();
-            var newMerchantId = _cPGContext.Merchants.Find(merchant);
 
-            return $"Successfully created new Merchant. Id : {newMerchantId}";
+            return $"Successfully created new Merchant";
         }
 
         public string UpdateMerchant(int id, Merchant merchant)
