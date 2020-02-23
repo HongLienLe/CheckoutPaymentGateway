@@ -17,8 +17,7 @@ namespace PaymentAPI.Models
         [Required]
         public string name { get; set; }
 
-        public int CardId { get; set; }
-        public Card Card { get; set; }
+        public ICollection<Card> Cards { get; set; }
 
         public int MerchantId { get; set; }
         public Merchant Merchant { get; set; }
@@ -28,6 +27,7 @@ namespace PaymentAPI.Models
         public Customer()
         {
             PaymentRequest = new List<PaymentRequest>();
+            Cards = new List<Card>();
         }
 
     }

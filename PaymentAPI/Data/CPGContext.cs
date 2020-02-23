@@ -20,9 +20,9 @@ namespace PaymentAPI.Data
         {
             modelBuilder.Entity<Customer>(e =>
             {
-                e.HasOne(x => x.Card)
+                e.HasMany(x => x.Cards)
                 .WithOne(x => x.Customer)
-                .HasForeignKey<Card>(x => x.CustomerId)
+                .HasForeignKey(x => x.CustomerId)
                 .OnDelete(DeleteBehavior.NoAction);
 
                 e.HasMany(x => x.PaymentRequest)

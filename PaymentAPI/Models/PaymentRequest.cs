@@ -26,6 +26,9 @@ namespace PaymentAPI.Models
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
 
+        public int CardId { get; set; }
+        public Card Card { get; set; }
+
         public int MerchantId { get; set; }
         public Merchant Merchant { get; set; }
 

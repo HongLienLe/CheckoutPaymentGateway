@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PaymentAPI.Process;
 
 namespace PaymentAPI.Controllers
 {
@@ -18,18 +19,17 @@ namespace PaymentAPI.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET: api/ProcessPaymentRequestApi/5
         [HttpGet("{id}", Name = "Get")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST: api/ProcessPaymentRequestApi
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+        //[HttpPost]
+        //public IActionResult Post([FromBody] ProcessPaymentRequest paymentRequest)
+        //{
+
+        //}
 
         // PUT: api/ProcessPaymentRequestApi/5
         [HttpPut("{id}")]

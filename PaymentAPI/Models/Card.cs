@@ -27,16 +27,9 @@ namespace PaymentAPI.Models
 
         public string name { get; set; }
 
-        [NotMapped]
-        public Address billing_address { get; set; }
-
-        [NotMapped]
-        public Phone phone { get; set; }
-
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
 
-        public int PaymentRequestId { get; set; }
         public PaymentRequest PaymentRequest { get; set; }
 
     }
