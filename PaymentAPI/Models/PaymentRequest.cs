@@ -26,12 +26,15 @@ namespace PaymentAPI.Models
 
         public string description { get; set; }
 
+        [Required]
         public int CustomerId { get; set; }
         public Customer Customer { get; private set; }
 
+        [Required]
         public int CardId { get; set; }
         public Card Card { get; private set; }
 
+        [Required]
         public int MerchantId { get; set; }
         public Merchant Merchant { get; private set; }
 
@@ -40,14 +43,15 @@ namespace PaymentAPI.Models
 
         }
 
-        public PaymentRequest(int amount, string currency, PaymentType paymentType, Customer customer, Merchant merchant, Card card)
+        public PaymentRequest(int amount, string currency, PaymentType paymentType, int customerId, int merchantId, Card card)
         {
             this.amount = amount;
             this.currency = currency;
             payment_type = paymentType;
-            Customer = customer;
-            Merchant = merchant;
+            CustomerId = customerId;
+            MerchantId = merchantId;
             Card = card;
+            capture_on = DateTime.UtcNow;
         }
 
     }

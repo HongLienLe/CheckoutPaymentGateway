@@ -6,6 +6,6 @@ namespace PaymentAPI.Process
     public interface ICustomerRepository
     {
         public Customer GetCustomer(int merchantId, string email);
-        public Customer CreateCustomer(Customer customer);
+        public Customer CreateCustomer(int merchantId, Customer customer);
     }
 }

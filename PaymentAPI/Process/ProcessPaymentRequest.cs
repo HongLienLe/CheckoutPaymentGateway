@@ -8,10 +8,12 @@ namespace PaymentAPI.Process
     public class ProcessPaymentRequest
     {
         private IMerchantRepository _merchantRepository;
+        private ICustomerRepository _customerRepository;
 
-        public ProcessPaymentRequest(IMerchantRepository merchantRepository)
+        public ProcessPaymentRequest(IMerchantRepository merchantRepository, ICustomerRepository customerRepository)
         {
             _merchantRepository = merchantRepository;
+            _customerRepository = customerRepository;
         }
 
         //Method ProcessPayment
@@ -45,6 +47,20 @@ namespace PaymentAPI.Process
 
             return merchant;     
         }
+
+        public Customer CustomerValidationCheck(PaymentRequestEntryToBank paymentRequestEntry)
+        {
+            var merchantId = paymentRequestEntry.paymentRequest.MerchantId;
+            var requestedCustomer = paymentRequestEntry.paymentRequest.Customer;
+            var customer = _customerRepository.GetCustomer(requestedCustomer.MerchantId, requestedCustomer.email);
+
+            return customer != null ? customer : _customerRepository.CreateCustomer(merchantId,requestedCustomer);
+        }
+
+        //public Card CardValidationCheck(PaymentRequestEntryToBank paymentRequestEntry)
+        //{
+
+        //}
 
         public bool isPaymentTypeRecurring(PaymentRequestEntryToBank paymentRequestEntry)
         {

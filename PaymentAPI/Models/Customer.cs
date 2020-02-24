@@ -12,12 +12,15 @@ namespace PaymentAPI.Models
         public int CustomerId { get; private set; }
 
         [Required]
+        [EmailAddress]
         public string email { get; set; }
 
         [Required]
         [StringLength(50, ErrorMessage = "Character Length exceed max of 50")]
         public string name { get; set; }
 
+        [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "Merchant Id must is required and must be a min value 0")]
         public int MerchantId { get; set; }
         public Merchant Merchant { get; set; }
 

@@ -34,6 +34,7 @@ namespace PaymentAPI
 
             services.AddTransient<IMerchantRepository, MerchantRepository>();
             services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<ICardRepository, CardRepository>();
 
             services.AddSwaggerGen(c =>
             {

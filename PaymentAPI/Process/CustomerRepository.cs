@@ -20,17 +20,15 @@ namespace PaymentAPI.Process
             if (!_cPGContext.Customers.Any(x => x.email == email && x.MerchantId == merchantId))
                 return null;
 
-            var customer = _cPGContext.Customers.SingleOrDefault(x => x.MerchantId == merchantId && x.email == email);
-
-            return customer != null ? customer : null;
+            return _cPGContext.Customers.First(x => x.MerchantId == merchantId && x.email == email);
         }
 
-        public Customer CreateCustomer( Customer customer)
+        public Customer CreateCustomer(int merchantId, Customer customer)
         {
-            if (_cPGContext.Customers.Any(x => x.email == customer.email && x.Merchant == customer.Merchant))
+            if (_cPGContext.Customers.Any(x => x.email == customer.email && x.MerchantId == merchantId))
                 return null;
 
-            var newCustomer = new Customer(customer.email, customer.name, customer.MerchantId);
+            var newCustomer = new Customer(customer.email, customer.name, merchantId);
 
             _cPGContext.Customers.Add(newCustomer);
 

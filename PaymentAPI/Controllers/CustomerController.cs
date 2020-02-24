@@ -32,7 +32,7 @@ namespace PaymentAPI.Controllers
             if (customer == null)
                 return NotFound("Either the customer or the merchant does not exist");
 
-            return Ok(customer);
+            return Ok(new { message = "Found requested Customer Details", requesetedCustomer = customer });
         }
 
        [HttpPost()]
@@ -42,7 +42,12 @@ namespace PaymentAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest("Model state is Invalid. Required Values : merchantId and email");
 
-            return Ok(new { message = "Successfully Created Customer", newCustomerEntry = _customerRepository.CreateCustomer(customer) });
+            var newCustomerEntry = _customerRepository.CreateCustomer(customer.MerchantId, customer);
+
+            if (newCustomerEntry == null)
+                return Conflict("Customer with given email already exist");
+
+            return Ok(new { message = "Successfully Created Customer", customer = newCustomerEntry });
         }
     }
 }

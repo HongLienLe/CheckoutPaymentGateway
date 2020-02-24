@@ -25,13 +25,15 @@ namespace PaymentAPI.Process
             return merchant;
         }
 
-        public string CreateMerchant(Merchant merchant)
+        public Merchant CreateMerchant(Merchant merchant)
         {
+            if ((merchant.MinAmount > 0 || merchant.MinAmount > merchant.MaxAmount))
+                return null;
 
             _cPGContext.Merchants.Add(merchant);
             _cPGContext.SaveChanges();
 
-            return $"Successfully created new Merchant";
+            return merchant;
         }
 
         public string UpdateMerchant(int id, Merchant merchant)
