@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using PaymentAPI.Data;
 using PaymentAPI.Process;
 using Microsoft.OpenApi.Models;
+using PaymentAPI.Models;
 
 namespace PaymentAPI
 {
@@ -33,7 +34,7 @@ namespace PaymentAPI
             .UseSqlServer(Configuration.GetConnectionString("CheckOutPGDB")));
 
             services.AddTransient<IMerchantRepository, MerchantRepository>();
-            //services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<IPaymentResponse, PaymentResponse>();
 
             services.AddSwaggerGen(c =>
             {

@@ -14,9 +14,5 @@ namespace PaymentAPI.Data
         public DbSet<Card> Cards { get; set; }
         public DbSet<Merchant> Merchants { get; set; }
         public DbSet<PaymentRequest> PaymentRequests { get; set; }
-
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //}
     }
 }

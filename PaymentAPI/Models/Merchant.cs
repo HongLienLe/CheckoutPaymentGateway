@@ -22,6 +22,7 @@ namespace PaymentAPI.Models
         [Range(0, double.MaxValue, ErrorMessage = "Min value must be equal 0 or more")]
         public int MaxAmount { get; set; }
 
+
         public ICollection<PaymentRequest> PaymentRequests { get; set; }
         public ICollection<Card> Cards { get; set; }
 

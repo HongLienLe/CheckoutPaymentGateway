@@ -9,7 +9,6 @@
     <Folder Include="Models\" />
     <Folder Include="Data\" />
     <Folder Include="Process\" />
-    <Folder Include="FromBodyModel\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2" />

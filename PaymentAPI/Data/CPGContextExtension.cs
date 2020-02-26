@@ -10,9 +10,6 @@ namespace PaymentAPI.Data
         {
             if (context.Merchants.Any())
                 return;
-
-         
-
         }
     }
 }

@@ -29,6 +29,8 @@ namespace PaymentAPI.Models
 
         public string description { get; set; }
 
+        public bool status { get; set; } = false;
+
         [ForeignKey("Card")]
         public int CardId { get; set; }
         [Required]
