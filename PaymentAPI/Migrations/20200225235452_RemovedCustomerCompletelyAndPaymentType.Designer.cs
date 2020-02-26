@@ -10,8 +10,8 @@ using PaymentAPI.Data;
 namespace PaymentAPI.Migrations
 {
     [DbContext(typeof(CPGContext))]
-    [Migration("20200223201324_addedMerchantNotNullableToCardModel")]
-    partial class addedMerchantNotNullableToCardModel
+    [Migration("20200225235452_RemovedCustomerCompletelyAndPaymentType")]
+    partial class RemovedCustomerCompletelyAndPaymentType
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,9 +27,6 @@ namespace PaymentAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
 
                     b.Property<int?>("MerchantId")
                         .HasColumnType("int");
@@ -59,37 +56,9 @@ namespace PaymentAPI.Migrations
 
                     b.HasKey("CardId");
 
-                    b.HasIndex("CustomerId");
-
                     b.HasIndex("MerchantId");
 
                     b.ToTable("Cards");
-                });
-
-            modelBuilder.Entity("PaymentAPI.Models.Customer", b =>
-                {
-                    b.Property<int>("CustomerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("MerchantId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.HasKey("CustomerId");
-
-                    b.HasIndex("MerchantId");
-
-                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("PaymentAPI.Models.Merchant", b =>
@@ -124,10 +93,7 @@ namespace PaymentAPI.Migrations
                     b.Property<int>("CardId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MerchantId")
+                    b.Property<int?>("MerchantId")
                         .HasColumnType("int");
 
                     b.Property<int>("amount")
@@ -152,8 +118,6 @@ namespace PaymentAPI.Migrations
                     b.HasIndex("CardId")
                         .IsUnique();
 
-                    b.HasIndex("CustomerId");
-
                     b.HasIndex("MerchantId");
 
                     b.ToTable("PaymentRequests");
@@ -161,24 +125,9 @@ namespace PaymentAPI.Migrations
 
             modelBuilder.Entity("PaymentAPI.Models.Card", b =>
                 {
-                    b.HasOne("PaymentAPI.Models.Customer", "Customer")
-                        .WithMany("Cards")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("PaymentAPI.Models.Merchant", null)
+                    b.HasOne("PaymentAPI.Models.Merchant", "Merchant")
                         .WithMany("Cards")
                         .HasForeignKey("MerchantId");
-                });
-
-            modelBuilder.Entity("PaymentAPI.Models.Customer", b =>
-                {
-                    b.HasOne("PaymentAPI.Models.Merchant", "Merchant")
-                        .WithMany("Customers")
-                        .HasForeignKey("MerchantId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("PaymentAPI.Models.PaymentRequest", b =>
@@ -189,17 +138,9 @@ namespace PaymentAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PaymentAPI.Models.Customer", "Customer")
-                        .WithMany("PaymentRequest")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("PaymentAPI.Models.Merchant", "Merchant")
                         .WithMany("PaymentRequests")
-                        .HasForeignKey("MerchantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MerchantId");
                 });
 #pragma warning restore 612, 618
         }

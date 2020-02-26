@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PaymentAPI.Models;
 using PaymentAPI.Process;
@@ -47,10 +46,13 @@ namespace PaymentAPI.Controllers
         [HttpPost("Create")]
         public IActionResult CreateMerchant([FromBody] Merchant merchant)
         {
+            if (!ModelState.IsValid)
+                return BadRequest("Model state is Invalid");
+
             if (merchant.MinAmount > merchant.MaxAmount || merchant.MinAmount < 0 || merchant.MaxAmount < 0)
                 return BadRequest("Min Value can not be more than Max value or less than 0");
 
-            return Ok(new { message = "Successfully Added Merchant", merchant = _merchantRepository.CreateMerchant(merchant) });
+            return Ok(_merchantRepository.CreateMerchant(merchant));
         }
 
         [HttpGet()]

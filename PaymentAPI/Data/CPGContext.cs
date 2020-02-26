@@ -11,31 +11,12 @@ namespace PaymentAPI.Data
             Database.EnsureCreated();
         }
 
-        public DbSet<Customer> Customers { get; set; }
         public DbSet<Card> Cards { get; set; }
         public DbSet<Merchant> Merchants { get; set; }
         public DbSet<PaymentRequest> PaymentRequests { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Customer>(e =>
-            {
-                e.HasMany(x => x.Cards)
-                .WithOne(x => x.Customer)
-                .HasForeignKey(x => x.CustomerId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-                e.HasMany(x => x.PaymentRequest)
-                .WithOne(x => x.Customer)
-                .HasForeignKey(x => x.CustomerId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-                e.HasOne(x => x.Merchant)
-                .WithMany(x => x.Customers)
-                .HasForeignKey(x => x.MerchantId)
-                .OnDelete(DeleteBehavior.NoAction);
-            });
-
-        }
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //}
     }
 }

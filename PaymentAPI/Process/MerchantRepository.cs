@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using PaymentAPI.Data;
+using PaymentAPI.FromBodyModel;
 using PaymentAPI.Models;
 
 namespace PaymentAPI.Process
@@ -17,7 +18,7 @@ namespace PaymentAPI.Process
 
         public Merchant GetMerchant(int id)
         {
-            if (!_cPGContext.Merchants.Any(x => x.MerchantId == id))
+            if (!MerchantExist(id))
                 return null;
 
             var merchant = _cPGContext.Merchants.First(x => x.MerchantId == id);
@@ -25,27 +26,28 @@ namespace PaymentAPI.Process
             return merchant;
         }
 
-        public Merchant CreateMerchant(Merchant merchant)
+        public string CreateMerchant(Merchant merchant)
         {
-            if ((merchant.MinAmount > 0 || merchant.MinAmount > merchant.MaxAmount))
-                return null;
 
             _cPGContext.Merchants.Add(merchant);
             _cPGContext.SaveChanges();
 
-            return merchant;
+            return $"Successfully created new Merchant";
         }
 
         public string UpdateMerchant(int id, Merchant merchant)
         {
+            if (isMinMoreThanMaxAmount(merchant))
+                return "Min is more than Max Value";
+
             var unEditedMerchant = GetMerchant(id);
 
             if (unEditedMerchant == null)
                 return null;
 
-            unEditedMerchant.Name = merchant.Name == null ? unEditedMerchant.Name : merchant.Name;
-            unEditedMerchant.MinAmount = merchant.MinAmount == unEditedMerchant.MinAmount || merchant.MinAmount == 0  ? unEditedMerchant.MinAmount : merchant.MinAmount;
-            unEditedMerchant.MaxAmount = merchant.MaxAmount == unEditedMerchant.MaxAmount || merchant.MaxAmount == 0 ? unEditedMerchant.MaxAmount : merchant.MaxAmount;
+            unEditedMerchant.Name = merchant.Name;
+            unEditedMerchant.MinAmount = merchant.MinAmount;
+            unEditedMerchant.MaxAmount = merchant.MaxAmount;
 
             _cPGContext.SaveChanges();
 
@@ -57,5 +59,30 @@ namespace PaymentAPI.Process
             return _cPGContext.Merchants.ToList();
         }
 
+        private bool MerchantExist(int merchantId)
+        {
+            return _cPGContext.Merchants.Any(x => x.MerchantId == merchantId) ? true : false;
+        }
+
+        private bool isMinMoreThanMaxAmount(Merchant merchant)
+        {
+            return merchant.MinAmount > merchant.MaxAmount ? false : true;
+        }
+
+        public string StorePaymentRequestToMerchant(PaymentRequest paymentRequest)
+        { 
+
+            var merchant = GetMerchant(paymentRequest.MerchantId);
+
+            if (merchant == null)
+                return "No Merchant";
+
+            merchant.Cards.Add(paymentRequest.Card);
+            merchant.PaymentRequests.Add(paymentRequest);
+
+            _cPGContext.SaveChanges();
+
+            return "Saved PaymentRequest to merchant acc";
+        }
     }
 }

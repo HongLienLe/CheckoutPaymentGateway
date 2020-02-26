@@ -7,35 +7,34 @@ namespace PaymentAPI.Models
 {
     public class PaymentRequest
     {
+        private int _amount;
+        private string _currency;
+        private int _merchantId;
+        private Card _card;
+
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PaymentRequestId { get; private set; }
 
-        [Range(0,Double.MaxValue, ErrorMessage = "Amount value must ")]
-        public int amount { get; private set; }
+        [Range(0, Double.MaxValue, ErrorMessage = "Amount value must ")]
+        public int amount { get { return _amount; } set { _amount = value; } }
 
         [Required]
-        [StringLength(3, ErrorMessage = "Currency must have 3 Characters",MinimumLength = 3)]
-        public string currency { get; private set; }
+        [StringLength(3, ErrorMessage = "Currency must have 3 Characters", MinimumLength = 3)]
+        public string currency { get { return _currency; } set { _currency = value; } }
 
         [Required]
-        public DateTime capture_on { get; private set; }
-
-        [Required]
-        public PaymentType payment_type { get; private set; }
+        public DateTime capture_on { get; private set; } = DateTime.UtcNow;
 
         public string description { get; set; }
 
-        [Required]
-        public int CustomerId { get; set; }
-        public Customer Customer { get; private set; }
-
-        [Required]
+        [ForeignKey("Card")]
         public int CardId { get; set; }
-        public Card Card { get; private set; }
-
         [Required]
-        public int MerchantId { get; set; }
+        public Card Card { get { return _card; } set { _card = value; } }
+
+        public int MerchantId { get { return _merchantId; } set { _merchantId = value; } }
         public Merchant Merchant { get; private set; }
 
         private PaymentRequest()
@@ -43,22 +42,13 @@ namespace PaymentAPI.Models
 
         }
 
-        public PaymentRequest(int amount, string currency, PaymentType paymentType, int customerId, int merchantId, Card card)
+        public PaymentRequest(int amount, string currency, int merchantId, Card card)
         {
-            this.amount = amount;
-            this.currency = currency;
-            payment_type = paymentType;
-            CustomerId = customerId;
-            MerchantId = merchantId;
-            Card = card;
-            capture_on = DateTime.UtcNow;
+            _amount = amount;
+            _currency = currency;
+            _merchantId = merchantId;
+            _card = card;
         }
 
-    }
-
-    public enum PaymentType
-    {
-        OneOff,
-        Recurring
     }
 }

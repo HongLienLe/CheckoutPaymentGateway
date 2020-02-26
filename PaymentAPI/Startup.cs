@@ -33,8 +33,7 @@ namespace PaymentAPI
             .UseSqlServer(Configuration.GetConnectionString("CheckOutPGDB")));
 
             services.AddTransient<IMerchantRepository, MerchantRepository>();
-            services.AddTransient<ICustomerRepository, CustomerRepository>();
-            services.AddTransient<ICardRepository, CardRepository>();
+            //services.AddTransient<ICustomerRepository, CustomerRepository>();
 
             services.AddSwaggerGen(c =>
             {

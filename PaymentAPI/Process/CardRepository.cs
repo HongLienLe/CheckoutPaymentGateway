@@ -5,36 +5,24 @@ using System.Linq;
 
 namespace PaymentAPI.Process
 {
-    public class CardRepository : ICardRepository
+    public class CardRepository
     {
-        private CPGContext _cPGContext;
+        private CPGContext _CPGContext;
 
         public CardRepository(CPGContext cPGContext)
         {
-            _cPGContext = cPGContext;
+            _CPGContext = cPGContext;
         }
 
-        public Card AddCard(int customerId, Card card)
+        public void CreateCard(Card card)
         {
-
-            if (_cPGContext.Cards.Where(x => x.CustomerId == customerId && x.MerchantId == card.MerchantId).Any(x => x.card_number == card.card_number))
-                return null;
-
-
-            var addedCard = new Card(card.card_number, card.expiry_month, card.expiry_year, card.cvv, card.name, customerId, card.MerchantId);
-
-            _cPGContext.Cards.Add(addedCard);
-            _cPGContext.SaveChanges();
-
-            return GetCard(customerId, card.card_number, card.MerchantId);
+            _CPGContext.Cards.Add(card);
+            _CPGContext.SaveChanges();
         }
 
-        public Card GetCard(int customerId, string cardNumber, int merchantId)
-        {
-            if (!_cPGContext.Cards.Any(x => x.CustomerId == customerId && x.card_number == cardNumber && x.MerchantId == merchantId))
-                return null;
-
-            return _cPGContext.Cards.First(x => x.CustomerId == customerId && x.card_number == cardNumber);
-        }
+        //public Card GetCard(string cardNo)
+        //{
+        //    return _CPGContext.Cards.Where(x => x.card_number == cardNo);
+        //}
     }
 }

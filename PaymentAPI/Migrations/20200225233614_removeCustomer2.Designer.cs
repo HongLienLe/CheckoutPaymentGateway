@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PaymentAPI.Data;
 
 namespace PaymentAPI.Migrations
 {
     [DbContext(typeof(CPGContext))]
-    partial class CPGContextModelSnapshot : ModelSnapshot
+    [Migration("20200225233614_removeCustomer2")]
+    partial class removeCustomer2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,6 +61,27 @@ namespace PaymentAPI.Migrations
                     b.ToTable("Cards");
                 });
 
+            modelBuilder.Entity("PaymentAPI.Models.Customer", b =>
+                {
+                    b.Property<int>("CustomerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("CustomerId");
+
+                    b.ToTable("Customers");
+                });
+
             modelBuilder.Entity("PaymentAPI.Models.Merchant", b =>
                 {
                     b.Property<int>("MerchantId")
@@ -91,7 +114,7 @@ namespace PaymentAPI.Migrations
                     b.Property<int>("CardId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MerchantId")
+                    b.Property<int?>("MerchantId")
                         .HasColumnType("int");
 
                     b.Property<int>("amount")
@@ -107,6 +130,9 @@ namespace PaymentAPI.Migrations
 
                     b.Property<string>("description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("payment_type")
+                        .HasColumnType("int");
 
                     b.HasKey("PaymentRequestId");
 
@@ -135,9 +161,7 @@ namespace PaymentAPI.Migrations
 
                     b.HasOne("PaymentAPI.Models.Merchant", "Merchant")
                         .WithMany("PaymentRequests")
-                        .HasForeignKey("MerchantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MerchantId");
                 });
 #pragma warning restore 612, 618
         }

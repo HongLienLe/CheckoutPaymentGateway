@@ -4,43 +4,29 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PaymentAPI.FromBodyModel;
+using PaymentAPI.Models;
 using PaymentAPI.Process;
 
 namespace PaymentAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProcessPaymentRequestApiController : ControllerBase
+    public class ProcessPaymentRequestApiController : Controller
     {
-        // GET: api/ProcessPaymentRequestApi
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private IMerchantRepository _merchantRepository;
+
+        public ProcessPaymentRequestApiController(IMerchantRepository merchantRepository)
         {
-            return new string[] { "value1", "value2" };
+            _merchantRepository = merchantRepository;
         }
 
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpPost]
+        public IActionResult PostRequest([FromBody]PaymentRequest paymentRequest)
         {
-            return "value";
-        }
+            var response = _merchantRepository.StorePaymentRequestToMerchant(paymentRequest);
 
-        //[HttpPost]
-        //public IActionResult Post([FromBody] ProcessPaymentRequest paymentRequest)
-        //{
-
-        //}
-
-        // PUT: api/ProcessPaymentRequestApi/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return Ok(response);
         }
     }
 }

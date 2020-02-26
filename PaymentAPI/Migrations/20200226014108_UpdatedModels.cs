@@ -2,34 +2,29 @@
 
 namespace PaymentAPI.Migrations
 {
-    public partial class AddMoreModelValidationsToModel : Migration
+    public partial class UpdatedModels : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Cards_Merchants_MerchantId",
-                table: "Cards");
+                name: "FK_PaymentRequests_Merchants_MerchantId",
+                table: "PaymentRequests");
 
-            migrationBuilder.AlterColumn<string>(
-                name: "name",
-                table: "Cards",
-                maxLength: 1,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
+            migrationBuilder.DropColumn(
+                name: "payment_type",
+                table: "PaymentRequests");
 
             migrationBuilder.AlterColumn<int>(
                 name: "MerchantId",
-                table: "Cards",
+                table: "PaymentRequests",
                 nullable: false,
                 oldClrType: typeof(int),
                 oldType: "int",
                 oldNullable: true);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Cards_Merchants_MerchantId",
-                table: "Cards",
+                name: "FK_PaymentRequests_Merchants_MerchantId",
+                table: "PaymentRequests",
                 column: "MerchantId",
                 principalTable: "Merchants",
                 principalColumn: "MerchantId",
@@ -39,27 +34,26 @@ namespace PaymentAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Cards_Merchants_MerchantId",
-                table: "Cards");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "name",
-                table: "Cards",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldMaxLength: 1);
+                name: "FK_PaymentRequests_Merchants_MerchantId",
+                table: "PaymentRequests");
 
             migrationBuilder.AlterColumn<int>(
                 name: "MerchantId",
-                table: "Cards",
+                table: "PaymentRequests",
                 type: "int",
                 nullable: true,
                 oldClrType: typeof(int));
 
+            migrationBuilder.AddColumn<int>(
+                name: "payment_type",
+                table: "PaymentRequests",
+                type: "int",
+                nullable: false,
+                defaultValue: 0);
+
             migrationBuilder.AddForeignKey(
-                name: "FK_Cards_Merchants_MerchantId",
-                table: "Cards",
+                name: "FK_PaymentRequests_Merchants_MerchantId",
+                table: "PaymentRequests",
                 column: "MerchantId",
                 principalTable: "Merchants",
                 principalColumn: "MerchantId",

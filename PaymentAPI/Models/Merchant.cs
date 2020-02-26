@@ -9,10 +9,9 @@ namespace PaymentAPI.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int MerchantId { get; private set; }
+        public int MerchantId { get; protected set; }
 
         [Required]
-        [StringLength(50, ErrorMessage = "Character Length exceed max of 50")]
         public string Name { get; set; }
 
         [Required]
@@ -24,15 +23,18 @@ namespace PaymentAPI.Models
         public int MaxAmount { get; set; }
 
         public ICollection<PaymentRequest> PaymentRequests { get; set; }
-        public ICollection<Customer> Customers { get; set; }
         public ICollection<Card> Cards { get; set; }
 
         private Merchant()
         {
-            Customers = new List<Customer>();
             Cards = new List<Card>();
             PaymentRequests = new List<PaymentRequest>();
 
+        }
+
+        public Merchant(string name)
+        {
+            Name = name;
         }
 
     }
