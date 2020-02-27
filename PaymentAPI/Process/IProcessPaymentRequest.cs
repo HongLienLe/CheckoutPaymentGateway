@@ -4,7 +4,7 @@ using PaymentAPI.Models;
 
 namespace PaymentAPI.Process
 {
-    public interface IMerchantRepository
+    public interface IProcessPaymentRequest
     {
         //public List<Merchant> GetAllMerchants();
         public Merchant GetMerchant(int id);

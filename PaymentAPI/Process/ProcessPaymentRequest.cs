@@ -6,15 +6,13 @@ using PaymentAPI.Models;
 
 namespace PaymentAPI.Process
 {
-    public class MerchantRepository : IMerchantRepository
+    public class ProcessPaymentRequest : IProcessPaymentRequest
     {
         private CPGContext _cPGContext;
-        private IPaymentResponse _paymentResponse;
 
-        public MerchantRepository(CPGContext cPGContext, IPaymentResponse paymentResponse)
+        public ProcessPaymentRequest(CPGContext cPGContext)
         {
             _cPGContext = cPGContext;
-            _paymentResponse = paymentResponse;
         }
 
         public Merchant GetMerchant(int id)
@@ -30,10 +28,10 @@ namespace PaymentAPI.Process
         private bool MerchantExist(int merchantId)
         {
             return _cPGContext.Merchants.Any(x => x.MerchantId == merchantId) ? true : false;
-        }   
+        }
 
         public string StorePaymentRequestToMerchant(PaymentRequest paymentRequest)
-        { 
+        {
 
             var merchant = GetMerchant(paymentRequest.MerchantId);
 
@@ -45,16 +43,23 @@ namespace PaymentAPI.Process
             if (!isWithinRange)
                 return $"Payment request is {paymentRequest.status}. Amount is not within range";
 
-
-            paymentRequest.status = _paymentResponse.GetPaymentStatus();
-
             merchant.Cards.Add(paymentRequest.Card);
             merchant.PaymentRequests.Add(paymentRequest);
 
+            paymentRequest.status = SendPaymentRequestToBank();
+
             _cPGContext.SaveChanges();
 
-            var StatusOfPayment = paymentRequest.status == true ? "Success" : "Unsuccessful";
-            return $"Payment request was {StatusOfPayment}.";
+            var statusToString = paymentRequest.status == true ? "Success" : "Unsuccessfull";
+
+            return $"Payment has been process and stored. PaymentId : {paymentRequest.PaymentRequestId} response : {statusToString} ";
+        }
+
+        private bool SendPaymentRequestToBank()
+        {
+            Random random = new Random();
+
+            return Convert.ToBoolean(random.Next(0, 3));
         }
 
     }

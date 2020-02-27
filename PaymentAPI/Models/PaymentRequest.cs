@@ -5,12 +5,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PaymentAPI.Models
 {
-    public class PaymentRequest
+    public sealed class PaymentRequest
     {
         private int _amount;
         private string _currency;
         private int _merchantId;
         private Card _card;
+        private DateTime _capture_on;
 
 
         [Key]
@@ -25,11 +26,11 @@ namespace PaymentAPI.Models
         public string currency { get { return _currency; } set { _currency = value; } }
 
         [Required]
-        public DateTime capture_on { get; private set; } = DateTime.UtcNow;
+        public DateTime capture_on { get{ return _capture_on; } set { _capture_on = value; }  }
 
         public string description { get; set; }
 
-        public bool status { get; set; } = false;
+        public bool status { get; set; }
 
         [ForeignKey("Card")]
         public int CardId { get; set; }
@@ -50,6 +51,7 @@ namespace PaymentAPI.Models
             _currency = currency;
             _merchantId = merchantId;
             _card = card;
+            _capture_on = DateTime.UtcNow; 
         }
 
     }

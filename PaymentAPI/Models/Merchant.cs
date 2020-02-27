@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PaymentAPI.Models
 {
-    public class Merchant
+    public sealed class Merchant
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

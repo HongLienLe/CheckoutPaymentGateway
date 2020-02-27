@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PaymentAPI.Models
 {
-    public class Card
+    public sealed class Card
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -19,7 +19,7 @@ namespace PaymentAPI.Models
 
 
         [Required]
-        [StringLength(16, ErrorMessage = "Card number contains of 16 digits")]
+        [StringLength(16, ErrorMessage = "Card number contains of 16 digits", MinimumLength = 16)]
         public string card_number { get { return _cardNumber; } set { _cardNumber = value; } }
 
         [Required]

@@ -13,17 +13,17 @@ namespace PaymentAPI.Controllers
     [ApiController]
     public class ProcessPaymentRequestApiController : Controller
     {
-        private IMerchantRepository _merchantRepository;
+        private IProcessPaymentRequest _processPaymentRequest;
 
-        public ProcessPaymentRequestApiController(IMerchantRepository merchantRepository)
+        public ProcessPaymentRequestApiController(IProcessPaymentRequest processPaymentRequest)
         {
-            _merchantRepository = merchantRepository;
+            _processPaymentRequest = processPaymentRequest;
         }
 
         [HttpPost]
         public IActionResult PostRequest([FromBody]PaymentRequest paymentRequest)
         {
-            var response = _merchantRepository.StorePaymentRequestToMerchant(paymentRequest);
+            var response = _processPaymentRequest.StorePaymentRequestToMerchant(paymentRequest);
 
             return Ok(response);
         }
