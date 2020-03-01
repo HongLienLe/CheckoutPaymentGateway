@@ -23,7 +23,17 @@ namespace PaymentAPI.Controllers
         [HttpPost]
         public IActionResult PostRequest([FromBody]PaymentRequest paymentRequest)
         {
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var response = _processPaymentRequest.StorePaymentRequestToMerchant(paymentRequest);
+
+            if (response == null)
+                return NotFound("Merchant does not exist");
+
+            if (response.StartsWith("A"))
+                return BadRequest(response);
 
             return Ok(response);
         }

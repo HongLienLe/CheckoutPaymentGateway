@@ -4,15 +4,16 @@ using PaymentAPI.Models;
 
 namespace PaymentAPI.Data
 {
-    public class CPGContext : DbContext
+    public partial class CPGContext : DbContext
     {
         public CPGContext(DbContextOptions<CPGContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
-        public DbSet<Card> Cards { get; set; }
-        public DbSet<Merchant> Merchants { get; set; }
-        public DbSet<PaymentRequest> PaymentRequests { get; set; }
+        public virtual DbSet<Card> Cards { get; set; }
+        public virtual DbSet<Merchant> Merchants { get; set; }
+        public virtual DbSet<PaymentRequest> PaymentRequests { get; set; }
+        public virtual DbSet<BankPaymentResponse> BankPaymentResponses { get; set; }
     }
 }

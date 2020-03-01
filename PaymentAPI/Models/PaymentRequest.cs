@@ -30,7 +30,7 @@ namespace PaymentAPI.Models
 
         public string description { get; set; }
 
-        public bool status { get; set; }
+        public BankPaymentResponse status { get; set; }
 
         [ForeignKey("Card")]
         public int CardId { get; set; }

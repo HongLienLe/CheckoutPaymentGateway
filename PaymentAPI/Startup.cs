@@ -35,6 +35,7 @@ namespace PaymentAPI
 
             services.AddTransient<IProcessPaymentRequest, ProcessPaymentRequest>();
             services.AddTransient<IPaymentHistory, PaymentHistory>();
+            services.AddTransient<IBankService, BankService>();
 
             services.AddSwaggerGen(c =>
             {

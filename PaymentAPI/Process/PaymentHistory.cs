@@ -5,7 +5,7 @@ using PaymentAPI.Models;
 
 namespace PaymentAPI.Process
 {
-    public class PaymentHistory : IPaymentHistory
+    public sealed class PaymentHistory : IPaymentHistory
     {
         private CPGContext _CPGContext;
 
@@ -23,24 +23,28 @@ namespace PaymentAPI.Process
 
             var cardDetails = _CPGContext.Cards.First(x => x.CardId == paymentRequestDetails.CardId);
 
+            var maskedCardNo = MaskCardNumber(cardDetails);
 
-            var cardNumberArray = cardDetails.card_number.ToCharArray();
+            return new PaymentResponse()
+            {
+                paymentRequestId = paymentRequestDetails.PaymentRequestId,
+                card_number = maskedCardNo,
+                currency = paymentRequestDetails.currency,
+                amount = paymentRequestDetails.amount,
+                Status = paymentRequestDetails.status.Status == true ? "Success" : "Unsuccesful"
+                };
+        }
+
+        private string MaskCardNumber(Card card)
+        {
+            var cardNumberArray = card.card_number.ToCharArray();
 
             for (int i = 0; i < cardNumberArray.Length - 4; i++)
             {
                 cardNumberArray[i] = '*';
             }
 
-           string maskedCardNo = String.Join("", cardNumberArray);
-
-
-            return new PaymentResponse() {
-                paymentRequestId = paymentRequestDetails.PaymentRequestId,
-                card_number = maskedCardNo,
-                currency = paymentRequestDetails.currency,
-                amount = paymentRequestDetails.amount,
-                Status = paymentRequestDetails.status == true ? "Success" : "Unsuccesfull"
-                };
+            return String.Join("", cardNumberArray);
         }
     }
 }

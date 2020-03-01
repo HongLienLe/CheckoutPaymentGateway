@@ -1,7 +1,7 @@
 ﻿using System;
 namespace PaymentAPI.Models
 {
-    public class PaymentResponse
+    public sealed class PaymentResponse
     {
         public int paymentRequestId { get; set; }
         public string card_number { get; set; }

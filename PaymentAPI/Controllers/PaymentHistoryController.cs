@@ -20,9 +20,15 @@ namespace PaymentAPI.Controllers
         }
 
         [HttpGet("{mercahntId}/payment/{paymentId}")]
-        public IActionResult GetPaymentsById(int mercahntId, int paymentId)
+        public IActionResult GetPaymentsById(int merchantId, int paymentId)
         {
-            return Ok(_paymentHistory.GetPaymentRequest(mercahntId, paymentId));
+
+            var response = _paymentHistory.GetPaymentRequest(merchantId, paymentId);
+
+            if (response == null)
+                return NotFound("Either or both merchant and payment Id does not exist");
+
+            return Ok(response);
         }
     }
 }

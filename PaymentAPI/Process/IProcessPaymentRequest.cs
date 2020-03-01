@@ -6,10 +6,6 @@ namespace PaymentAPI.Process
 {
     public interface IProcessPaymentRequest
     {
-        //public List<Merchant> GetAllMerchants();
-        public Merchant GetMerchant(int id);
-        //public string UpdateMerchant(int id, Merchant merchant);
-        //public string CreateMerchant(Merchant merchant);
         public string StorePaymentRequestToMerchant(PaymentRequest paymentRequest);
     }
 }
