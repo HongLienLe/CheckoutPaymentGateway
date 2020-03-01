@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PaymentAPI.Data;
 using PaymentAPI.Models;
 
@@ -39,20 +40,27 @@ namespace PaymentAPI.Process
             if (!isWithinRange)
                 return $"Amount is not within range. Min Amount = {merchant.MinAmount} - {merchant.MaxAmount}";
 
+
             merchant.PaymentRequests.Add(paymentRequest);
             merchant.Cards.Add(paymentRequest.Card);
 
             _cPGContext.SaveChanges();
 
-            paymentRequest.status = _bankService.GetBankPaymentResponse();
+            var _bankPaymentResponse = ProcessBankResponse(paymentRequest);
 
-
-            var statusToString = paymentRequest.status.Status == true ? "Success" : "Unsuccessful";
+            var statusToString = _bankPaymentResponse.Status == true ? "Success" : "Unsuccessful";
 
             return $"Payment has been process and stored. PaymentId : {paymentRequest.PaymentRequestId} Status : {statusToString} ";
         }
 
+        private BankPaymentResponse ProcessBankResponse(PaymentRequest paymentRequest)
+        {
+            var bankResponse = _bankService.GetBankPaymentResponse(paymentRequest);
+            _cPGContext.BankPaymentResponses.Add(bankResponse);
+            _cPGContext.SaveChanges();
 
+            return bankResponse;
+        }
 
     }
 }

@@ -34,7 +34,7 @@ namespace PaymentAPI
             .UseSqlServer(Configuration.GetConnectionString("CheckOutPGDB")));
 
             services.AddTransient<IProcessPaymentRequest, ProcessPaymentRequest>();
-            services.AddTransient<IPaymentHistory, PaymentHistory>();
+            services.AddScoped<IPaymentHistory, PaymentHistory>();
             services.AddTransient<IBankService, BankService>();
 
             services.AddSwaggerGen(c =>

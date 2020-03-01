@@ -5,6 +5,6 @@ namespace PaymentAPI.Process
 {
     public interface IBankService
     {
-        public BankPaymentResponse GetBankPaymentResponse();
+        public BankPaymentResponse GetBankPaymentResponse(PaymentRequest paymnentRequest);
     }
 }

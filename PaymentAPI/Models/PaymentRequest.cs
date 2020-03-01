@@ -30,7 +30,7 @@ namespace PaymentAPI.Models
 
         public string description { get; set; }
 
-        public BankPaymentResponse status { get; set; }
+        public BankPaymentResponse Status { get; set; }
 
         [ForeignKey("Card")]
         public int CardId { get; set; }
@@ -51,7 +51,7 @@ namespace PaymentAPI.Models
             _currency = currency;
             _merchantId = merchantId;
             _card = card;
-            _capture_on = DateTime.UtcNow; 
+            _capture_on = DateTime.UtcNow;
         }
 
     }

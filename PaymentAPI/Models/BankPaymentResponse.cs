@@ -1,8 +1,13 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace PaymentAPI.Models
 {
     public sealed class BankPaymentResponse
     {
+        [Key]
+        public int BankPaymentResponseId { get; set; }
+
         public Guid Id { get; set; }
         public bool Status { get; set; }
 

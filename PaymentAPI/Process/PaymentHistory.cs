@@ -31,7 +31,7 @@ namespace PaymentAPI.Process
                 card_number = maskedCardNo,
                 currency = paymentRequestDetails.currency,
                 amount = paymentRequestDetails.amount,
-                Status = paymentRequestDetails.status.Status == true ? "Success" : "Unsuccesful"
+                Status = paymentRequestDetails.Status.Status == true ? "Success" : "Unsuccesful"
                 };
         }
 

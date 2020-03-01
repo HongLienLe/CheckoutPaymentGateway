@@ -22,7 +22,7 @@ namespace PaymentAPITest
         {
             Card card = new Card("1234567890", 1, 2020, "123", "Test");
             PaymentRequest paymentRequest = new PaymentRequest(100000, "ABC", 1, card);
-            var controller = GetProcessPaymentRequestController(false);
+            var controller = GetProcessPaymentRequestController(false, paymentRequest);
 
             var result = controller.PostRequest(paymentRequest) as ObjectResult;
 
@@ -34,12 +34,11 @@ namespace PaymentAPITest
 
         [Test]
         public void return_404_bad_request_when_merchant_does_not_exist()
-        {// In-memory database only exists while the connection is open
-
+        {
             Card card = new Card("1234567890123456", 1, 2020, "123", "Test");
             var paymentRequest = new  PaymentRequest(1, "ABC", 100, card);
 
-            var controller = GetProcessPaymentRequestController(false);
+            var controller = GetProcessPaymentRequestController(false, paymentRequest);
 
             var result = controller.PostRequest(paymentRequest) as ObjectResult;
 
@@ -54,7 +53,7 @@ namespace PaymentAPITest
         {
             Card card = new Card("1234567890", 1, 2020, "123", "Test");
             PaymentRequest paymentRequest = new PaymentRequest(100, "ABC", 1, card);
-            var controller = GetProcessPaymentRequestController(true);
+            var controller = GetProcessPaymentRequestController(true, paymentRequest);
 
             var result = controller.PostRequest(paymentRequest) as ObjectResult;
 
@@ -84,27 +83,61 @@ namespace PaymentAPITest
         }
 
         [Test]
-        public void return_400_merchant_doesnt_exist_via_payment_history()
+        public void return_masked_card_number_and_statuc_payment_response()
         {
+            _connectionFactory = new ConnectionFactory();
+            _context = _connectionFactory.CreateContextForSQLite();
+
+            var paymentHistory = new PaymentHistory(_context);
+            SeedPaymentHistoryData();
+
+            var response = paymentHistory.GetPaymentRequest(1, 1);
+
+            EndConnection();
+
+            Assert.IsTrue("************ryT1" == response.card_number);
+            Assert.IsTrue(response.Status == "Success");
+        }
+
+        [Test]
+        public void return_404_merchant_doesnt_exist_via_payment_history()
+        {
+            var controller = GetPaymentHistoryController();
+
+            var result = controller.GetPaymentsById(100, 100) as ObjectResult;
+
+            EndConnection();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(404, result.StatusCode);
+            Assert.AreEqual("Either or both merchant and payment Id does not exist", result.Value.ToString());
 
         }
 
         [Test]
         public void return_400_paymentId_invalid_merchant_valid_via_payment_history()
         {
+            var controller = GetPaymentHistoryController();
 
+            var result = controller.GetPaymentsById(1, 100) as ObjectResult;
+
+            EndConnection();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(404, result.StatusCode);
+            Assert.AreEqual("Either or both merchant and payment Id does not exist", result.Value.ToString());
         }
 
-        
 
-        private ProcessPaymentRequestApiController GetProcessPaymentRequestController(bool bankReponse)
+
+        private ProcessPaymentRequestApiController GetProcessPaymentRequestController(bool bankReponse, PaymentRequest payment)
         {
             _connectionFactory = new ConnectionFactory();
             _context = _connectionFactory.CreateContextForSQLite();
 
             var bankMoq = new Mock<IBankService>();
             var id = Guid.NewGuid();
-            bankMoq.Setup(x => x.GetBankPaymentResponse()).Returns(new BankPaymentResponse(id, bankReponse));
+            bankMoq.Setup(x => x.GetBankPaymentResponse(payment)).Returns(new BankPaymentResponse(id, bankReponse) { PaymentRequest = payment });
 
             var processPaymentRequest = new ProcessPaymentRequest(_context, bankMoq.Object);
 
@@ -139,10 +172,10 @@ namespace PaymentAPITest
 
             List<PaymentRequest> paymentRequests = new List<PaymentRequest>() {
 
-                new PaymentRequest(100, "CD1", 1, card1){status = new BankPaymentResponse(Guid.NewGuid(),true) },
-                new PaymentRequest(250, "CD2", 2, card2){status = new BankPaymentResponse(Guid.NewGuid(),false) },
-                new PaymentRequest(3050, "CD3", 3, card3){status = new BankPaymentResponse(Guid.NewGuid(),true) },
-                new PaymentRequest(4000, "CD4", 3, card4){status = new BankPaymentResponse(Guid.NewGuid(),true) }
+                new PaymentRequest(100, "CD1", 1, card1){Status = new BankPaymentResponse(Guid.NewGuid(),true) },
+                new PaymentRequest(250, "CD2", 2, card2){Status = new BankPaymentResponse(Guid.NewGuid(),false) },
+                new PaymentRequest(3050, "CD3", 3, card3){Status = new BankPaymentResponse(Guid.NewGuid(),true) },
+                new PaymentRequest(4000, "CD4", 3, card4){Status = new BankPaymentResponse(Guid.NewGuid(),true) }
             };
 
             _context.PaymentRequests.AddRange(paymentRequests);

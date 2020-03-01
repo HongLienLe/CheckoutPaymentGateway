@@ -12,10 +12,12 @@ namespace PaymentAPI.Process
             return Convert.ToBoolean(random.Next(0, 3));
         }
 
-        public BankPaymentResponse GetBankPaymentResponse()
+        public BankPaymentResponse GetBankPaymentResponse(PaymentRequest paymentRequest)
         {
             var id = Guid.NewGuid();
-            return new BankPaymentResponse(id,isSuccessful());
+            var bankresponse =  new BankPaymentResponse(id, isSuccessful()) { PaymentRequest = paymentRequest } ;
+
+            return bankresponse;
         }
     }
 }
