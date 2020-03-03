@@ -1,6 +1,8 @@
 # CheckoutPaymentGateway
 
 Purpose 
+
+
 	• Process a Payment request from a Merchant and stores the Information in a Local Database and then send to a Bank to get the Status of the payment whether it is successful or Unsuccessful
 	• Merchant is able to request the payment via Merchant Id and Payment Id
 
