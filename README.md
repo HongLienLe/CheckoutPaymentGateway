@@ -28,6 +28,7 @@ Payment request Example [HTTP POST]
 	}
 		
 Response 
+
 	If Amount is not valid - 	404 Not Found
 	If MerchantId does not exist -	404 Bad Request
 	Payment Successfully Process -	200 Ok
@@ -39,6 +40,7 @@ Get From Payment History [HTTP GET]
 
 
 Response
+
 	If either or neither MerchantId or PaymentRequestId exist -	404 Not Found
 	If Successful -	200 Ok
  
