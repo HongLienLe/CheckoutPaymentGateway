@@ -15,7 +15,7 @@ namespace PaymentAPI.Process
         public BankPaymentResponse GetBankPaymentResponse(PaymentRequest paymentRequest)
         {
             var id = Guid.NewGuid();
-            var bankresponse =  new BankPaymentResponse(id, isSuccessful()) { PaymentRequest = paymentRequest } ;
+            var bankresponse =  new BankPaymentResponse(id, isSuccessful()) { PaymentRequest = paymentRequest, MerchantId = paymentRequest.MerchantId} ;
 
             return bankresponse;
         }

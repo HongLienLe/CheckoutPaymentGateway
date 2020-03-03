@@ -14,6 +14,9 @@ namespace PaymentAPI.Models
         public int PaymentRequestId { get; set; }
         public PaymentRequest PaymentRequest { get; set; }
 
+        public int MerchantId { get; set; }
+        public Merchant Merchant { get; set; }
+
         public BankPaymentResponse(Guid id, bool status)
         {
             Id = id;
