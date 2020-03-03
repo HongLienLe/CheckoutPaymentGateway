@@ -27,7 +27,7 @@ Payment request Example [HTTP POST]
 	    "merchantid": 1
 	}
 		
-Response 
+	Response 
 
 	If Amount is not valid - 	404 Not Found
 	If MerchantId does not exist -	404 Bad Request
@@ -39,7 +39,7 @@ Get From Payment History [HTTP GET]
 	http://localhost:5002/api/PaymentHistory/{mercahntId}/payment/{paymentId}"
 
 
-Response
+	Response
 
 	If either or neither MerchantId or PaymentRequestId exist -	404 Not Found
 	If Successful -	200 Ok
