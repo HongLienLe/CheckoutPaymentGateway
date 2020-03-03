@@ -38,7 +38,7 @@ Payment request Example [HTTP POST]
 
 Get From Payment History [HTTP GET]
 
-	http://localhost:5002/api/PaymentHistory/{mercahntId}/payment/{paymentId}"
+	http://localhost:5002/api/PaymentHistory/{merchantId}/payment/{paymentId}"
 
 
 	Response
@@ -59,15 +59,17 @@ Postman
 	I also used it whilst I was programming for reassurance that my model states validations and error messages
 
 
-Given Extra Time I'd 
+Given Extra Time I'd would
 
-	• Added a Dbset of Bank Response for the merchant
-	• Added Unit testing  for also Model State 
-	• Currently I am using a Mac book, my connection strings for my Local DB. 
-	   I have no been able to properly test if it will work for PC
-	• Added Authentication for the Merchant to limit what access to the data they had (Tokens)
-	• Given more time I would of like to have it reviewed by another developer
-	• Polish my naming conventions 
+	• Add a Dbset of Bank Response for the merchant
+	• Add Unit testing  for also Model State 
+	• Test on other devices, currently I am using a Mac book, my connection strings for my Local DB may not work for other devices.
+	• Add Authentication and Authorization for the Merchant to limit what access to the data they had (Tokens)
+	• To have it reviewed by another developer
+	• Improve my naming conventions and method names
 		○ I understand that my code is most likely difficult to read as I am still learning the coding conventions
 	• Encrypt vulnerable data to increase security
-    Middleware to log exceptions I may have missed
+   	• Add Middleware to log exceptions I may have missed
+    	• Refactor and polish my code to make it more readable
+	• Improve the effiency by considering Big O Notation
+    
