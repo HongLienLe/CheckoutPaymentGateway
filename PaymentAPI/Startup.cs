@@ -30,16 +30,17 @@ namespace PaymentAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<CPGContext>(o => o
-            .UseSqlServer(Configuration.GetConnectionString("CheckoutPGDBPC")));
+            //services.AddDbContext<CPGContext>(o => o
+            //.UseSqlServer(Configuration.GetConnectionString("CheckoutPGDBPC")));
 
             //services.AddDbContext<CPGContext>(o => o
             //.UseSqlite(Configuration.GetConnectionString("CheckOutSQLite")));
+            services.AddDbContext<CPGContext>(o => o
+            .UseSqlServer(Configuration.GetConnectionString("CheckOutPGDB")));
 
-           
 
             services.AddTransient<IProcessPaymentRequest, ProcessPaymentRequest>();
-            services.AddScoped<IPaymentHistory, PaymentHistory>();
+            services.AddTransient<IPaymentHistory, PaymentHistory>();
             services.AddTransient<IBankService, BankService>();
 
             services.AddSwaggerGen(c =>

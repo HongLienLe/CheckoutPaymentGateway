@@ -56,6 +56,8 @@ namespace PaymentAPI.Process
         private BankPaymentResponse ProcessBankResponse(PaymentRequest paymentRequest)
         {
             var bankResponse = _bankService.GetBankPaymentResponse(paymentRequest);
+
+            paymentRequest.Status = bankResponse;
             _cPGContext.BankPaymentResponses.Add(bankResponse);
             _cPGContext.SaveChanges();
 

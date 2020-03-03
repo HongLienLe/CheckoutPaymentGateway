@@ -16,8 +16,6 @@ namespace PaymentAPITest
 
         public CPGContext CreateContextForSQLite()
         {
-
-
             connection = new SqliteConnection("DataSource=:CheckoutDBTest:");
 
             connection.Open();

@@ -21,16 +21,9 @@ namespace PaymentAPI.Migrations
 
             modelBuilder.Entity("PaymentAPI.Models.BankPaymentResponse", b =>
                 {
-                    b.Property<int>("BankPaymentResponseId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("MerchantId")
-                        .HasColumnType("int");
 
                     b.Property<int>("PaymentRequestId")
                         .HasColumnType("int");
@@ -38,14 +31,12 @@ namespace PaymentAPI.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.HasKey("BankPaymentResponseId");
-
-                    b.HasIndex("MerchantId");
+                    b.HasKey("Id");
 
                     b.HasIndex("PaymentRequestId")
                         .IsUnique();
 
-                    b.ToTable("BankPaymentResponses");
+                    b.ToTable("BankPaymentResponse");
                 });
 
             modelBuilder.Entity("PaymentAPI.Models.Card", b =>
@@ -149,12 +140,8 @@ namespace PaymentAPI.Migrations
 
             modelBuilder.Entity("PaymentAPI.Models.BankPaymentResponse", b =>
                 {
-                    b.HasOne("PaymentAPI.Models.Merchant", null)
-                        .WithMany("BankPaymentResponses")
-                        .HasForeignKey("MerchantId");
-
                     b.HasOne("PaymentAPI.Models.PaymentRequest", "PaymentRequest")
-                        .WithOne("Status")
+                        .WithOne("status")
                         .HasForeignKey("PaymentAPI.Models.BankPaymentResponse", "PaymentRequestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

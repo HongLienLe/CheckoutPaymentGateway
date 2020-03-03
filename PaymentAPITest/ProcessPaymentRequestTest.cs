@@ -130,14 +130,14 @@ namespace PaymentAPITest
 
 
 
-        private ProcessPaymentRequestApiController GetProcessPaymentRequestController(bool bankReponse, PaymentRequest payment)
+        private ProcessPaymentRequestApiController GetProcessPaymentRequestController(bool bankReponse, PaymentRequest paymentRequest)
         {
             _connectionFactory = new ConnectionFactory();
             _context = _connectionFactory.CreateContextForSQLite();
 
             var bankMoq = new Mock<IBankService>();
             var id = Guid.NewGuid();
-            bankMoq.Setup(x => x.GetBankPaymentResponse(payment)).Returns(new BankPaymentResponse(id, bankReponse) { PaymentRequest = payment });
+            bankMoq.Setup(x => x.GetBankPaymentResponse(paymentRequest)).Returns(new BankPaymentResponse(id, bankReponse) {PaymentRequest = paymentRequest });
 
             var processPaymentRequest = new ProcessPaymentRequest(_context, bankMoq.Object);
 
