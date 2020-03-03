@@ -11,6 +11,7 @@ Purpose
 
 Request Format - Json
 Payment request Example [HTTP POST]
+
 	http://localhost:5002/api/ProcessPaymentRequestapi
 
 
@@ -36,6 +37,7 @@ Payment request Example [HTTP POST]
 
 
 Get From Payment History [HTTP GET]
+
 	http://localhost:5002/api/PaymentHistory/{mercahntId}/payment/{paymentId}"
 
 
