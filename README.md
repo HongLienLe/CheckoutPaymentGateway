@@ -10,6 +10,7 @@ The API is captures the Data in a Json Response using the Endpoints
 
 http://localhost:5002/api/ProcessPaymentRequestapi
 
+
 Request Format - Json
 Payment request Example [HTTP POST]
 	{
@@ -24,6 +25,7 @@ Payment request Example [HTTP POST]
 	    },
 	    "merchantid": 1
 	}
+	
 	
 Response 
 Possible Outcome - 	HTTP Status Code
