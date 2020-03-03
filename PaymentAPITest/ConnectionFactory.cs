@@ -11,11 +11,14 @@ namespace PaymentAPITest
     {
         public SqliteConnection connection { get; set; }
 
+
         private bool disposedValue = false; // To detect redundant calls  
 
         public CPGContext CreateContextForSQLite()
         {
-            connection = new SqliteConnection("DataSource=:CheckoutDB:");
+
+
+            connection = new SqliteConnection("DataSource=:CheckoutDBTest:");
 
             connection.Open();
 

@@ -20,8 +20,8 @@ namespace PaymentAPITest
         [Test]
         public void return_404_bad_request_when_amount_is_out_of_range()
         {
-            Card card = new Card("1234567890", 1, 2020, "123", "Test");
-            PaymentRequest paymentRequest = new PaymentRequest(100000, "ABC", 1, card);
+            var card = new Card("1234567890", 1, 2020, "123", "Test");
+            var paymentRequest = new PaymentRequest(100000, "ABC", 1, card);
             var controller = GetProcessPaymentRequestController(false, paymentRequest);
 
             var result = controller.PostRequest(paymentRequest) as ObjectResult;
@@ -35,7 +35,7 @@ namespace PaymentAPITest
         [Test]
         public void return_404_bad_request_when_merchant_does_not_exist()
         {
-            Card card = new Card("1234567890123456", 1, 2020, "123", "Test");
+            var card = new Card("1234567890123456", 1, 2020, "123", "Test");
             var paymentRequest = new  PaymentRequest(1, "ABC", 100, card);
 
             var controller = GetProcessPaymentRequestController(false, paymentRequest);
@@ -51,8 +51,8 @@ namespace PaymentAPITest
         [Test]
         public void return_200_when_payment_has_been_process()
         {
-            Card card = new Card("1234567890", 1, 2020, "123", "Test");
-            PaymentRequest paymentRequest = new PaymentRequest(100, "ABC", 1, card);
+            var card = new Card("1234567890", 1, 2020, "123", "Test");
+            var paymentRequest = new PaymentRequest(100, "ABC", 1, card);
             var controller = GetProcessPaymentRequestController(true, paymentRequest);
 
             var result = controller.PostRequest(paymentRequest) as ObjectResult;
@@ -165,10 +165,10 @@ namespace PaymentAPITest
 
         private void SeedPaymentHistoryData()
         {
-            Card card1 = new Card("PaymenthistoryT1", 1, 2021, "CVV", "Test1");
-            Card card2 = new Card("PaymenthistoryT2", 2, 2022, "CVV", "Test2");
-            Card card3 = new Card("PaymenthistoryT3", 3, 2023, "CVV", "Test3");
-            Card card4 = new Card("PaymenthistoryT4", 4, 2024, "CVV", "Test4");
+            var card1 = new Card("PaymenthistoryT1", 1, 2021, "CVV", "Test1");
+            var card2 = new Card("PaymenthistoryT2", 2, 2022, "CVV", "Test2");
+            var card3 = new Card("PaymenthistoryT3", 3, 2023, "CVV", "Test3");
+            var card4 = new Card("PaymenthistoryT4", 4, 2024, "CVV", "Test4");
 
             List<PaymentRequest> paymentRequests = new List<PaymentRequest>() {
 

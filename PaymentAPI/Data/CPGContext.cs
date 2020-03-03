@@ -8,7 +8,7 @@ namespace PaymentAPI.Data
     {
         public CPGContext(DbContextOptions<CPGContext> options) : base(options)
         {
-          //  Database.EnsureCreated();
+            Database.EnsureCreated();
         }
 
         public virtual DbSet<Card> Cards { get; set; }

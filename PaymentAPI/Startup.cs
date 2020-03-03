@@ -31,7 +31,12 @@ namespace PaymentAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<CPGContext>(o => o
-            .UseSqlServer(Configuration.GetConnectionString("CheckOutPGDB")));
+            .UseSqlServer(Configuration.GetConnectionString("CheckoutPGDBPC")));
+
+            //services.AddDbContext<CPGContext>(o => o
+            //.UseSqlite(Configuration.GetConnectionString("CheckOutSQLite")));
+
+           
 
             services.AddTransient<IProcessPaymentRequest, ProcessPaymentRequest>();
             services.AddScoped<IPaymentHistory, PaymentHistory>();
