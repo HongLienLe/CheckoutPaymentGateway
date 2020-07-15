@@ -30,8 +30,8 @@ Payment request Example [HTTP POST]
 		
 	Response 
 
-	If Amount is not valid - 	404 Not Found
-	If MerchantId does not exist -	404 Bad Request
+	If Amount is not valid - 	404 Bad Request
+	If MerchantId does not exist -	404 Not Found
 	Payment Successfully Process -	200 Ok
 
 
