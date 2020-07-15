@@ -67,7 +67,6 @@ Given Extra Time I'd would
 	• Add Authentication and Authorization for the Merchant to limit what access to the data they had (Tokens)
 	• To have it reviewed by another developer
 	• Improve my naming conventions and method names
-		○ I understand that my code is most likely difficult to read as I am still learning the coding conventions
 	• Encrypt vulnerable data to increase security
    	• Add Middleware to log exceptions I may have missed
     	• Refactor and polish my code to make it more readable
